@@ -1,0 +1,14 @@
+ip access-list extended Manage-SSH
+#permit 172.16.0.0/12 - 0.15.255.255 is a wildcard mask
+permit ip 172.16.0.0 0.15.255.255 any
+#permit 10.0.0.0/8 - 0.255.255.255 is a wildcard mask
+permit ip 10.0.0.0 0.255.255.255 any
+#permit a specific IP
+permit ip host x.x.x.x any
+exit
+
+line vty 0 4
+# apply the access-list to the main VRF but also other VRFs (so that this also applies to your mgmt interface)
+access-class Manage-SSH in vrf-also
+exit
+
